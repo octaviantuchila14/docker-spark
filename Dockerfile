@@ -13,8 +13,8 @@ ARG SBT_BINARY_ARCHIVE_NAME=sbt-$SBT_VERSION
 ARG SBT_BINARY_DOWNLOAD_URL=https://dl.bintray.com/sbt/native-packages/sbt/${SBT_VERSION}/${SBT_BINARY_ARCHIVE_NAME}.tgz
 
 # Spark related variables.
-ARG SPARK_VERSION=2.0.2
-ARG SPARK_BINARY_ARCHIVE_NAME=spark-${SPARK_VERSION}-bin-hadoop2.7
+ARG SPARK_VERSION=1.6.0
+ARG SPARK_BINARY_ARCHIVE_NAME=spark-${SPARK_VERSION}-bin-hadoop2.6
 ARG SPARK_BINARY_DOWNLOAD_URL=http://d3kbcqa49mib13.cloudfront.net/${SPARK_BINARY_ARCHIVE_NAME}.tgz
 
 # Configure env variables for Scala, SBT and Spark.
