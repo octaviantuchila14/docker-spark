@@ -1,6 +1,6 @@
 FROM openjdk:8
 
-MAINTAINER Prashanth Babu <Prashanth.Babu@gmail.com>
+MAINTAINER Sebastian Piu
 
 # Scala related variables.
 ARG SCALA_VERSION=2.11.8
@@ -30,12 +30,14 @@ RUN apt-get -yqq update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /tmp/* && \
+    mkdir /usr/local/sbt && \
     wget -qO - ${SCALA_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
-    wget -qO - ${SBT_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/  && \
+    wget -qO - ${SBT_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/sbt --strip-components 1  && \
     wget -qO - ${SPARK_BINARY_DOWNLOAD_URL} | tar -xz -C /usr/local/ && \
     cd /usr/local/ && \
     ln -s ${SCALA_BINARY_ARCHIVE_NAME} scala && \
-    ln -s ${SPARK_BINARY_ARCHIVE_NAME} spark
+    ln -s ${SPARK_BINARY_ARCHIVE_NAME} spark && \
+    sbt sbtVersion
 
 # We will be running our Spark jobs as `root` user.
 USER root
