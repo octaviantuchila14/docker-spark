@@ -49,13 +49,21 @@ RUN apt-get install curl tar bash && \
 
 # end of Maven part
 
+# Jenkins part
 
-# Configure env variables for Scala, SBT and Spark.
-# Also configure PATH env variable to include binary folders of Java, Scala, SBT and Spark.
-ENV SCALA_HOME  /usr/local/scala
-ENV SBT_HOME    /usr/local/sbt
-ENV SPARK_HOME  /usr/local/spark
-ENV PATH        $JAVA_HOME/bin:$SCALA_HOME/bin:$SBT_HOME/bin:$SPARK_HOME/bin:$SPARK_HOME/sbin:/opt/maven/bin:$PATH
+RUN apt-get update && \
+    apt-get --no-install-recommends install -q -y openjdk-7-jre-headless && \
+    rm -rf /var/lib/apt/lists/*
+ADD http://mirrors.jenkins-ci.org/war/2.20/jenkins.war /opt/jenkins.war
+RUN chmod 644 /opt/jenkins.war
+ENV JENKINS_HOME /jenkins
+
+ENTRYPOINT ["java", "-jar", "/opt/jenkins.war"]
+EXPOSE 8080
+CMD [""]
+
+# end of Jenkins part
+
 
 # We will be running our Spark jobs as `root` user.
 USER root
